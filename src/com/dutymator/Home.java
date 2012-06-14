@@ -2,10 +2,13 @@ package com.dutymator;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * @author Zsolt Takacs <zsolt@takacs.cc>
@@ -19,9 +22,11 @@ public class Home extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        CalendarReader reader = new CalendarReader();
+        SharedPreferences settings = getSharedPreferences("dutymator", 0);
+        Integer calendar = settings.getInt("calendar", -1);
 
-        reader.getCalendarIds(getApplicationContext());
+        TextView hello = (TextView) findViewById(R.id.hello);
+        hello.setText("CalendarId: " + calendar);
     }
 
     @Override
