@@ -17,6 +17,11 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".Settings"/>
+        <activity android:name=".Settings"
+                  android:label="@string/settings_name"/>
+        <activity android:name=".LogActivity" android:label="@string/log_name"/>
+        <service android:name=".RedirectService" />
+        <provider android:name="com.dutymator.database.LogProvider"
+              android:authorities="com.dutymator.database.LogProvider" />
     </application>
 </manifest> 

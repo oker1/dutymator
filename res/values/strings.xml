@@ -2,4 +2,10 @@
 <resources>
     <string name="app_name">Dutymator</string>
     <string name="menu_settings">Settings</string>
+    <string name="settings_name">Settings</string>
+    <string name="schedule_button">Schedule!</string>
+    <string name="menu_log">Log</string>
+    <string name="log_name">Log</string>
+    <string name="calendar_desc">Calendar to use.</string>
+    <string name="calendar">Calendar</string>
 </resources>

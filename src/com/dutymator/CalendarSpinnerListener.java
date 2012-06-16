@@ -21,7 +21,7 @@ public class CalendarSpinnerListener implements AdapterView.OnItemSelectedListen
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long l) {
         SharedPreferences.Editor editor = settings.edit();
-        editor.putInt("calendar", Integer.parseInt(ids.get(pos)));
+        editor.putInt(Preferences.CALENDAR_ID, Integer.parseInt(ids.get(pos)));
         editor.commit();
     }
 

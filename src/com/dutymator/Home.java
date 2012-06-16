@@ -1,20 +1,25 @@
 package com.dutymator;
 
-import android.app.Activity;
+import android.app.ListActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.Button;
+
+import java.util.ArrayList;
 
 /**
  * @author Zsolt Takacs <zsolt@takacs.cc>
  */
-public class Home extends Activity
+public class Home extends ListActivity
 {
+    private EventAdapter eventAdapter;
+    private CalendarReader calendarReader;
+
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -22,11 +27,45 @@ public class Home extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        SharedPreferences settings = getSharedPreferences("dutymator", 0);
-        Integer calendar = settings.getInt("calendar", -1);
+        calendarReader = new CalendarReader();
 
-        TextView hello = (TextView) findViewById(R.id.hello);
-        hello.setText("CalendarId: " + calendar);
+        int calendarId = getCalendarIdFromPreferences();
+
+        Logger.log(this, "Calendar id: " + calendarId);
+
+        eventAdapter = new EventAdapter(this, R.layout.list_event, new ArrayList<Event>());
+        fillEventAdapterFromCalendar(calendarId);
+        
+        setListAdapter(eventAdapter);
+
+        Button schedule = (Button) findViewById(R.id.schedule);
+
+        schedule.setOnClickListener(new ScheduleButtonListener(this));
+    }
+
+    private int getCalendarIdFromPreferences()
+    {
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
+        return Integer.parseInt(settings.getString(Preferences.CALENDAR_ID, "-1"));
+    }
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+
+        fillEventAdapterFromCalendar(getCalendarIdFromPreferences());
+    }
+
+    private void fillEventAdapterFromCalendar(int calendar)
+    {
+        eventAdapter.clear();
+
+        ArrayList<Event> events = calendarReader.getEventsFromCalendar(getApplicationContext(), calendar);
+
+        for (Event event : events) {
+            eventAdapter.add(event);
+        }
     }
 
     @Override
@@ -38,9 +77,14 @@ public class Home extends Activity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Intent myIntent;
         switch (item.getItemId()) {
             case R.id.menu_settings:
-                Intent myIntent = new Intent(Home.this, Settings.class);
+                myIntent = new Intent(Home.this, Settings.class);
+                Home.this.startActivity(myIntent);
+                return true;
+            case R.id.menu_log:
+                myIntent = new Intent(Home.this, LogActivity.class);
                 Home.this.startActivity(myIntent);
                 return true;
             default:

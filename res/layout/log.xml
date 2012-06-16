@@ -5,14 +5,8 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     >
-    <Button
-        android:id="@+id/schedule"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/schedule_button"/>
     <ListView
         android:id="@android:id/list"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"/>
 </LinearLayout>
-

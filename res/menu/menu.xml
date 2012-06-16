@@ -4,4 +4,7 @@
     <item android:id="@+id/menu_settings"
           android:icon="@android:drawable/ic_menu_preferences"
           android:title="@string/menu_settings"/>
+    <item android:id="@+id/menu_log"
+          android:icon="@android:drawable/ic_menu_recent_history"
+          android:title="@string/menu_log"/>
 </menu>
