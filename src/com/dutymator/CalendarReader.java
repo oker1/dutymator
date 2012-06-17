@@ -94,4 +94,21 @@ public class CalendarReader {
 
         return entries;
     }
+
+    public Event getActiveEventFromCalendar(Context context, int calendarId)
+    {
+        ArrayList<Event> events = getEventsFromCalendar(context, calendarId);
+
+        Event activeEvent = null;
+
+        Date time = new Date();
+
+        for (Event event : events) {
+            if (event.begin.before(time) && event.end.after(time)) {
+                activeEvent = event;
+            }
+        }
+
+        return activeEvent;
+    }
 }

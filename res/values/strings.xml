@@ -8,4 +8,5 @@
     <string name="log_name">Log</string>
     <string name="calendar_desc">Calendar to use.</string>
     <string name="calendar">Calendar</string>
+    <string name="menu_clear">Clear log</string>
 </resources>
