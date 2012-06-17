@@ -5,6 +5,7 @@ import android.content.ContentUris;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.text.format.DateUtils;
 
 import java.util.ArrayList;
@@ -20,7 +21,10 @@ public class CalendarReader {
     public Map<String, String> getCalendarIds(Context context) {
         ContentResolver contentResolver = context.getContentResolver();
 
-        final Cursor cursor = contentResolver.query(Uri.parse("content://com.android.calendar/calendars"),
+        String calendarUrl = Integer.parseInt(Build.VERSION.SDK) >= Build.VERSION_CODES.FROYO ?
+            "content://com.android.calendar" : "content://calendar";
+
+        final Cursor cursor = contentResolver.query(Uri.parse(calendarUrl + "/calendars"),
                 (new String[] { "_id", "displayName" }), null, null, null);
 
         HashMap<String, String> calendars = new HashMap<String, String>();

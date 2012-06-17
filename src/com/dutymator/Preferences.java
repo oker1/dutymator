@@ -5,6 +5,5 @@ package com.dutymator;
  */
 public class Preferences
 {
-    public static final String NAME = "dutymator";
     public static final String CALENDAR_ID = "calendar_id";
 }

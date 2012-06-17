@@ -18,7 +18,7 @@ public class ScheduleButtonListener implements Button.OnClickListener
 {
     private Context homeActivity;
 
-    public ScheduleButtonListener(Home home) {
+    public ScheduleButtonListener(HomeActivity home) {
         this.homeActivity = home;
     }
 
@@ -27,7 +27,7 @@ public class ScheduleButtonListener implements Button.OnClickListener
     {
         String number = "+3630";
 
-        AlarmManager mgr = (AlarmManager) homeActivity.getSystemService(Home.ALARM_SERVICE);
+        AlarmManager mgr = (AlarmManager) homeActivity.getSystemService(HomeActivity.ALARM_SERVICE);
         Intent redirectIntent = new Intent(homeActivity, RedirectService.class);
         redirectIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         redirectIntent.putExtra("number", number);

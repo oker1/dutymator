@@ -15,7 +15,7 @@ import java.util.ArrayList;
 /**
  * @author Zsolt Takacs <zsolt@takacs.cc>
  */
-public class Home extends ListActivity
+public class HomeActivity extends ListActivity
 {
     private EventAdapter eventAdapter;
     private CalendarReader calendarReader;
@@ -80,12 +80,12 @@ public class Home extends ListActivity
         Intent myIntent;
         switch (item.getItemId()) {
             case R.id.menu_settings:
-                myIntent = new Intent(Home.this, Settings.class);
-                Home.this.startActivity(myIntent);
+                myIntent = new Intent(HomeActivity.this, SettingsActivity.class);
+                HomeActivity.this.startActivity(myIntent);
                 return true;
             case R.id.menu_log:
-                myIntent = new Intent(Home.this, LogActivity.class);
-                Home.this.startActivity(myIntent);
+                myIntent = new Intent(HomeActivity.this, LogActivity.class);
+                HomeActivity.this.startActivity(myIntent);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
