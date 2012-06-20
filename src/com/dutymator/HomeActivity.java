@@ -8,6 +8,7 @@ import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 
 import java.util.ArrayList;
@@ -41,6 +42,15 @@ public class HomeActivity extends ListActivity
         Button schedule = (Button) findViewById(R.id.schedule);
 
         schedule.setOnClickListener(new ScheduleButtonListener(this));
+
+        Button stop = (Button) findViewById(R.id.stop);
+
+        stop.setOnClickListener(new Button.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Redirecter.stop(HomeActivity.this);
+            }
+        });
     }
 
     private int getCalendarIdFromPreferences()

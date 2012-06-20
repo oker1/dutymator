@@ -25,21 +25,21 @@ public class RedirectService extends Service
         int calendarId = Integer.parseInt(settings.getString(Preferences.CALENDAR_ID, "-1"));
 
         CalendarReader reader = new CalendarReader();
-        Numbers numbers = new Numbers();
+        ContactsReader contactsReader = new ContactsReader();
 
         Event activeEvent = reader.getActiveEventFromCalendar(this, calendarId);
 
         String message;
         if (activeEvent != null) {
-            String number = numbers.getNumberForName(activeEvent.title);
+            String number = contactsReader.getNumber(this, activeEvent.title);
 
             if (number != null) {
                 Intent callIntent = new Intent(Intent.ACTION_CALL);
                 callIntent.setData(Uri.fromParts("tel", "**21*\\" + number + "\\#", ""));
                 callIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(callIntent);
+                //startActivity(callIntent);
 
-                message = "Redirected to " + number;
+                message = "Redirected to " + activeEvent.title + "(" + number + ")";
             } else {
                 message = "No number for name " + activeEvent.title;
             }

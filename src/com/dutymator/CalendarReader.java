@@ -47,7 +47,7 @@ public class CalendarReader {
 
         Uri.Builder builder = Uri.parse("content://com.android.calendar/instances/when").buildUpon();
         long now = new Date().getTime();
-        ContentUris.appendId(builder, now);
+        ContentUris.appendId(builder, now - DateUtils.DAY_IN_MILLIS * 2);
         ContentUris.appendId(builder, now + DateUtils.WEEK_IN_MILLIS);
 
         Cursor eventCursor = contentResolver.query(builder.build(),

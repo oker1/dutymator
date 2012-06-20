@@ -5,11 +5,25 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     >
-    <Button
-        android:id="@+id/schedule"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/schedule_button"/>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+          android:orientation="horizontal"
+          android:layout_width="fill_parent"
+          android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/schedule"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/schedule_button"
+            android:paddingLeft="50sp"
+            android:paddingRight="50sp"/>
+        <Button
+            android:id="@+id/stop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/stop_button"
+            android:paddingLeft="60sp"
+            android:paddingRight="60sp"/>
+    </LinearLayout>
     <ListView
         android:id="@android:id/list"
         android:layout_width="fill_parent"
