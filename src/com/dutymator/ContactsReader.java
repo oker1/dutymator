@@ -15,7 +15,7 @@ public class ContactsReader {
             ContactsContract.Contacts.CONTENT_URI, null,
             ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME + " ='"+name+"'", null, null
         );
-        if (cursor.moveToNext()) {
+        while (cursor.moveToNext()) {
             String contactId = cursor.getString(cursor.getColumnIndex(
                     ContactsContract.Contacts._ID));
             int hasPhone = cursor.getInt(cursor.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER));
@@ -26,6 +26,7 @@ public class ContactsReader {
                 );
                 if (phones.moveToNext()) {
                     number = phones.getString(phones.getColumnIndex( ContactsContract.CommonDataKinds.Phone.NUMBER));
+                    break;
                 }
                 phones.close();
             }

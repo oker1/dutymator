@@ -1,6 +1,7 @@
 package com.dutymator;
 
 import android.app.ListActivity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -32,16 +34,26 @@ public class HomeActivity extends ListActivity
 
         int calendarId = getCalendarIdFromPreferences();
 
-        Logger.log(this, "Calendar id: " + calendarId);
-
         eventAdapter = new EventAdapter(this, R.layout.list_event, new ArrayList<Event>());
         fillEventAdapterFromCalendar(calendarId);
         
         setListAdapter(eventAdapter);
 
+        setupButtons();
+    }
+
+    private void setupButtons() {
         Button schedule = (Button) findViewById(R.id.schedule);
 
-        schedule.setOnClickListener(new ScheduleButtonListener(this));
+        final Context context1 = this;
+        schedule.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view)
+            {
+                Redirecter.schedule(HomeActivity.this);
+                Toast.makeText(HomeActivity.this, "Redirecting scheduled.", Toast.LENGTH_LONG);
+            }
+        });
 
         Button stop = (Button) findViewById(R.id.stop);
 
@@ -49,6 +61,7 @@ public class HomeActivity extends ListActivity
             @Override
             public void onClick(View view) {
                 Redirecter.stop(HomeActivity.this);
+                Toast.makeText(HomeActivity.this, "Redirecting stopped.", Toast.LENGTH_LONG);
             }
         });
     }

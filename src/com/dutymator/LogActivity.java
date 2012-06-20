@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.SimpleCursorAdapter;
+import com.dutymator.database.LogAdapter;
 import com.dutymator.database.LogProvider;
 
 /**
@@ -29,7 +30,7 @@ public class LogActivity extends ListActivity
         String[] from = { "date", "message" };
         int[] to = { R.id.date, R.id.message };
 
-        SimpleCursorAdapter adapter = new SimpleCursorAdapter(this, R.layout.list_log, cursor, from, to);
+        SimpleCursorAdapter adapter = new LogAdapter(this, R.layout.list_log, cursor, from, to);
 
         setListAdapter(adapter);
     }
