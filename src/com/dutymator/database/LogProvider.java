@@ -1,10 +1,6 @@
 package com.dutymator.database;
 
-import android.content.ContentProvider;
-import android.content.ContentResolver;
-import android.content.ContentUris;
-import android.content.ContentValues;
-import android.content.UriMatcher;
+import android.content.*;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;

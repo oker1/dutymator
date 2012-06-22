@@ -5,7 +5,8 @@ import android.content.Context;
 import android.util.Config;
 import android.util.Log;
 import com.dutymator.database.LogProvider;
-import static com.dutymator.DutymatorApp.*;
+
+import static com.dutymator.DutymatorApp.TAG;
 
 /**
  * @author Zsolt Takacs <takacs.zsolt@ustream.tv>

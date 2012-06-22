@@ -2,12 +2,12 @@ package com.dutymator.database;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import com.dutymator.R;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -20,9 +20,11 @@ public class LogAdapter extends SimpleCursorAdapter {
 
         TextView date = (TextView) view.findViewById(R.id.date);
 
-        SimpleDateFormat format = new SimpleDateFormat("yyyy. MM. dd. HH:mm:ss");
+        java.text.DateFormat dateFormat = DateFormat.getDateFormat(context);
+        java.text.DateFormat timeFormat = DateFormat.getTimeFormat(context);
 
-        date.setText(format.format(new Date(cursor.getLong(cursor.getColumnIndex("date")))));
+        Date logDate = new Date(cursor.getLong(cursor.getColumnIndex("date")));
+        date.setText(dateFormat.format(logDate) + " " + timeFormat.format(logDate));
     }
 
     public LogAdapter(Context context, int layout, Cursor c, String[] from, int[] to) {

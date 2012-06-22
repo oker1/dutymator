@@ -19,6 +19,8 @@ public class Event implements Comparable<Event>
 
     public long beginTimestamp;
 
+    public long endTimestamp;
+
     @Override
     public int compareTo(Event event)
     {

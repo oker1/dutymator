@@ -8,11 +8,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.text.format.DateUtils;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author Zsolt Takacs <zsolt@takacs.cc>
@@ -42,7 +38,7 @@ public class CalendarReader {
         return calendars;
     }
 
-    public ArrayList<Event> getEventsFromCalendar(Context context, int calendarId) {
+    public ArrayList<Event> getEventsFromCalendar(Context context, int calendarId, Date allDayFrom, Date allDayTo) {
         ContentResolver contentResolver = context.getContentResolver();
 
         Uri.Builder builder = Uri.parse("content://com.android.calendar/instances/when").buildUpon();
@@ -65,6 +61,9 @@ public class CalendarReader {
                 event.end = new Date(eventCursor.getLong(3));
                 event.allDay = eventCursor.getInt(4) != 0;
                 event.beginTimestamp = eventCursor.getLong(2);
+                event.endTimestamp = eventCursor.getLong(3);
+
+                processEvent(allDayFrom, allDayTo, event);
 
                 events.add(event);
             }
@@ -95,9 +94,9 @@ public class CalendarReader {
         return entries;
     }
 
-    public Event getActiveEventFromCalendar(Context context, int calendarId)
+    public Event getActiveEventFromCalendar(Context context, int calendarId, Date allDayFrom, Date allDayTo)
     {
-        ArrayList<Event> events = getEventsFromCalendar(context, calendarId);
+        ArrayList<Event> events = getEventsFromCalendar(context, calendarId, allDayFrom, allDayTo);
 
         Event activeEvent = null;
 
@@ -110,5 +109,29 @@ public class CalendarReader {
         }
 
         return activeEvent;
+    }
+
+    private void processEvent(Date allDayFrom, Date allDayTo, Event event) {
+        if (event.allDay) {
+            event.begin = new Date(
+                event.begin.getYear(), event.begin.getMonth(), event.begin.getDate(), allDayFrom.getHours(),
+                allDayFrom.getMinutes()
+            );
+
+            if (event.end.getHours() > event.begin.getHours()) {
+                Calendar day = new GregorianCalendar(event.end.getYear(), event.end.getMonth(), event.end.getDate());
+                day.add(Calendar.DAY_OF_MONTH, -1);
+
+                event.end = new Date(
+                    day.get(Calendar.YEAR), day.get(Calendar.MONTH), day.get(Calendar.DAY_OF_MONTH),
+                    event.end.getHours(), event.end.getMinutes()
+                );
+            } else {
+                event.end = new Date(
+                    event.end.getYear(), event.end.getMonth(), event.end.getDate(), allDayTo.getHours(),
+                    allDayTo.getMinutes()
+                );
+            }
+        }
     }
 }

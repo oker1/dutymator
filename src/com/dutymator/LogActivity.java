@@ -2,7 +2,6 @@ package com.dutymator;
 
 import android.app.ListActivity;
 import android.content.ContentResolver;
-import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.Menu;

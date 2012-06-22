@@ -12,8 +12,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+import com.dutymator.database.EventAdapter;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * @author Zsolt Takacs <zsolt@takacs.cc>
@@ -45,13 +47,12 @@ public class HomeActivity extends ListActivity
     private void setupButtons() {
         Button schedule = (Button) findViewById(R.id.schedule);
 
-        final Context context1 = this;
         schedule.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view)
             {
-                Redirecter.schedule(HomeActivity.this);
                 Toast.makeText(HomeActivity.this, "Redirecting scheduled.", Toast.LENGTH_LONG);
+                Redirecter.schedule(HomeActivity.this);
             }
         });
 
@@ -60,8 +61,8 @@ public class HomeActivity extends ListActivity
         stop.setOnClickListener(new Button.OnClickListener(){
             @Override
             public void onClick(View view) {
-                Redirecter.stop(HomeActivity.this);
                 Toast.makeText(HomeActivity.this, "Redirecting stopped.", Toast.LENGTH_LONG);
+                Redirecter.stop(HomeActivity.this);
             }
         });
     }
@@ -82,9 +83,14 @@ public class HomeActivity extends ListActivity
 
     private void fillEventAdapterFromCalendar(int calendar)
     {
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
+
         eventAdapter.clear();
 
-        ArrayList<Event> events = calendarReader.getEventsFromCalendar(getApplicationContext(), calendar);
+        ArrayList<Event> events = calendarReader.getEventsFromCalendar(
+            getApplicationContext(), calendar, new Date(settings.getLong(Preferences.ALL_DAY_FROM, 0)),
+            new Date(settings.getLong(Preferences.ALL_DAY_TO, 0))
+        );
 
         for (Event event : events) {
             eventAdapter.add(event);
@@ -102,6 +108,9 @@ public class HomeActivity extends ListActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent myIntent;
         switch (item.getItemId()) {
+            case R.id.menu_refresh:
+                fillEventAdapterFromCalendar(getCalendarIdFromPreferences());
+                return true;
             case R.id.menu_settings:
                 myIntent = new Intent(HomeActivity.this, SettingsActivity.class);
                 HomeActivity.this.startActivity(myIntent);

@@ -6,16 +6,15 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
-import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.Date;
 
 /**
  * @author Zsolt Takacs <takacs.zsolt@ustream.tv>
  */
 public class RedirectService extends Service
 {
+
     @Override
     public void onStart(Intent intent, int startId)
     {
@@ -27,7 +26,9 @@ public class RedirectService extends Service
         CalendarReader reader = new CalendarReader();
         ContactsReader contactsReader = new ContactsReader();
 
-        Event activeEvent = reader.getActiveEventFromCalendar(this, calendarId);
+        Event activeEvent = reader.getActiveEventFromCalendar(
+            this, calendarId, new Date(settings.getLong(Preferences.ALL_DAY_FROM, 0)), new Date(settings.getLong(Preferences.ALL_DAY_TO, 0))
+        );
 
         String message;
         if (activeEvent != null) {
@@ -37,7 +38,9 @@ public class RedirectService extends Service
                 Intent callIntent = new Intent(Intent.ACTION_CALL);
                 callIntent.setData(Uri.fromParts("tel", "**21*\\" + number + "\\#", ""));
                 callIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                //startActivity(callIntent);
+                if (!intent.getBooleanExtra(Preferences.DRY_RUN, false)) {
+                    startActivity(callIntent);
+                }
 
                 message = "Redirected to " + activeEvent.title + "(" + number + ")";
             } else {

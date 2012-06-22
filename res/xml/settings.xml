@@ -6,4 +6,18 @@
         android:title="@string/calendar"
         android:summary="@string/calendar_desc"
         android:defaultValue=""/>
+    <com.dutymator.preference.TimePreference
+        android:key="all_day_from"
+        android:title="@string/all_day_from"/>
+    <com.dutymator.preference.TimePreference
+        android:key="all_day_to"
+        android:title="@string/all_day_to"/>
+    <EditTextPreference
+        android:key="schedule_interval"
+        android:title="@string/schedule_interval"
+        android:inputType="numberDecimal"/>
+    <CheckBoxPreference
+        android:key="dry_run"
+        android:title="@string/dry_run"
+        android:defaultValue="0"/>
 </PreferenceScreen>

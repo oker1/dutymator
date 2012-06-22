@@ -10,4 +10,11 @@
     <string name="calendar">Calendar</string>
     <string name="menu_clear">Clear log</string>
     <string name="stop_button">Stop</string>
+    <string name="all_day_from">From time</string>
+    <string name="all_day_to">To time</string>
+    <string name="set">Set</string>
+    <string name="cancel">Cancel</string>
+    <string name="schedule_interval">Scheduling interval</string>
+    <string name="dry_run">Dry run</string>
+    <string name="menu_refresh">Refresh</string>
 </resources>

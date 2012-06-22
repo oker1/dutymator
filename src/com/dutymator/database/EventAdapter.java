@@ -1,13 +1,15 @@
-package com.dutymator;
+package com.dutymator.database;
 
 import android.content.Context;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import com.dutymator.Event;
+import com.dutymator.R;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 /**
@@ -32,14 +34,10 @@ public class EventAdapter extends ArrayAdapter<Event>
             }
             Event event = items.get(position);
             if (event != null) {
-                String date;
-                if (event.allDay) {
-                    SimpleDateFormat format = new SimpleDateFormat("yyyy. MM. dd.");
-                    date = format.format(event.begin);
-                } else {
-                    SimpleDateFormat format = new SimpleDateFormat("yyyy. MM. dd. HH:mm");
-                    date = format.format(event.begin) + " - " + format.format(event.end);
-                }
+                java.text.DateFormat dateFormat = DateFormat.getDateFormat(getContext());
+                java.text.DateFormat timeFormat = DateFormat.getTimeFormat(getContext());
+                String date = dateFormat.format(event.begin) + " " + timeFormat.format(event.begin) + " - " +
+                    dateFormat.format(event.end) + " " + timeFormat.format(event.end);
 
                 TextView tt = (TextView) v.findViewById(R.id.title);
                 TextView bt = (TextView) v.findViewById(R.id.date);
