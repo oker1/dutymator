@@ -18,6 +18,8 @@ public class Redirecter
 {
     private static PendingIntent lastIntent;
 
+    public static String lastRedirectedContact;
+
     public static void schedule(Context context) {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
         int seconds = Integer.parseInt(settings.getString(Preferences.SCHEDULING_INTERVAL, "300"));

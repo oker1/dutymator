@@ -34,17 +34,22 @@ public class RedirectService extends Service
         if (activeEvent != null) {
             String number = contactsReader.getNumber(this, activeEvent.title);
 
-            if (number != null) {
-                Intent callIntent = new Intent(Intent.ACTION_CALL);
-                callIntent.setData(Uri.fromParts("tel", "**21*\\" + number + "\\#", ""));
-                callIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                if (!intent.getBooleanExtra(Preferences.DRY_RUN, false)) {
-                    startActivity(callIntent);
-                }
+            if (!activeEvent.title.equals(Redirecter.lastRedirectedContact)) {
+                if (number != null) {
+                    Intent callIntent = new Intent(Intent.ACTION_CALL);
+                    callIntent.setData(Uri.fromParts("tel", "**21*\\" + number + "\\#", ""));
+                    callIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    if (!intent.getBooleanExtra(Preferences.DRY_RUN, false)) {
+                        startActivity(callIntent);
+                    }
 
-                message = "Redirected to " + activeEvent.title + "(" + number + ")";
+                    Redirecter.lastRedirectedContact = activeEvent.title;
+                    message = "Redirected to " + activeEvent.title + "(" + number + ")";
+                } else {
+                    message = "No number for name " + activeEvent.title;
+                }
             } else {
-                message = "No number for name " + activeEvent.title;
+                message = "Already redirected to " + activeEvent.title + "(" + number + ")";
             }
         } else {
             message = "No active event found!";

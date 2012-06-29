@@ -32,4 +32,11 @@ public class Event implements Comparable<Event>
             return 1;
         }
     }
+
+    public boolean isActive() {
+        Date time = new Date();
+        boolean before = begin.before(time);
+        boolean after = end.after(time);
+        return before && after;
+    }
 }

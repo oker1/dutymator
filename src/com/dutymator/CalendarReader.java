@@ -100,10 +100,8 @@ public class CalendarReader {
 
         Event activeEvent = null;
 
-        Date time = new Date();
-
         for (Event event : events) {
-            if (event.begin.before(time) && event.end.after(time)) {
+            if (event.isActive()) {
                 activeEvent = event;
             }
         }

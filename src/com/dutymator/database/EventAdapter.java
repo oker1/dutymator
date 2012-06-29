@@ -1,6 +1,7 @@
 package com.dutymator.database;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,6 +42,13 @@ public class EventAdapter extends ArrayAdapter<Event>
 
                 TextView tt = (TextView) v.findViewById(R.id.title);
                 TextView bt = (TextView) v.findViewById(R.id.date);
+
+                if (event.isActive()) {
+                    bt.setTypeface(null, Typeface.BOLD);
+                } else {
+                    bt.setTypeface(null, Typeface.NORMAL);
+                }
+
                 tt.setText(event.title);
                 bt.setText(date);
             }
