@@ -70,7 +70,12 @@ public class HomeActivity extends ListActivity
     private int getCalendarIdFromPreferences()
     {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
-        return Integer.parseInt(settings.getString(Preferences.CALENDAR_ID, "-1"));
+        try {
+            return Integer.parseInt(settings.getString(Preferences.CALENDAR_ID, "-1"));
+        } catch (NumberFormatException e) {
+            return -1;
+        }
+
     }
 
     @Override
