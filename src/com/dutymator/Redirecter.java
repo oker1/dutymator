@@ -27,7 +27,6 @@ public class Redirecter
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Activity.ALARM_SERVICE);
         Intent redirectIntent = new Intent(context, RedirectService.class);
         redirectIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        redirectIntent.putExtra(Preferences.DRY_RUN, settings.getBoolean(Preferences.DRY_RUN, false));
 
         PendingIntent pendingIntent = PendingIntent.getService(context, 0, redirectIntent, 0);
 

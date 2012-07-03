@@ -17,7 +17,6 @@ import java.util.Date;
  */
 public class RedirectService extends Service
 {
-
     @Override
     public void onStart(Intent intent, int startId)
     {
@@ -42,7 +41,7 @@ public class RedirectService extends Service
                     Intent callIntent = new Intent(Intent.ACTION_CALL);
                     callIntent.setData(Uri.fromParts("tel", "**21*\\" + number + "\\#", ""));
                     callIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    if (!intent.getBooleanExtra(Preferences.DRY_RUN, false)) {
+                    if (!settings.getBoolean(Preferences.DRY_RUN, false)) {
                         startActivity(callIntent);
                     }
 
