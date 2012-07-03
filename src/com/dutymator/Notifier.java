@@ -19,9 +19,12 @@ public class Notifier {
         Notification notification = new Notification(icon, message, System.currentTimeMillis());
 
         Intent notificationIntent = new Intent(context, HomeActivity.class);
-        PendingIntent contentIntent = PendingIntent.getActivity(context, 0, notificationIntent, 0);
+        PendingIntent contentIntent = PendingIntent.getActivity(
+            context, 0, notificationIntent, PendingIntent.FLAG_CANCEL_CURRENT
+        );
 
         notification.setLatestEventInfo(context, context.getString(R.string.app_name), message, contentIntent);
+        notification.flags = Notification.FLAG_AUTO_CANCEL;
 
         notificationManager.notify(1, notification);
     }
