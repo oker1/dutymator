@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -51,8 +52,8 @@ public class HomeActivity extends ListActivity
             @Override
             public void onClick(View view)
             {
-                Toast.makeText(HomeActivity.this, "Redirecting scheduled.", Toast.LENGTH_LONG);
                 Redirecter.schedule(HomeActivity.this);
+                Logger.log(HomeActivity.this, Log.INFO, "Redirecting scheduled.");
             }
         });
 
@@ -61,8 +62,8 @@ public class HomeActivity extends ListActivity
         stop.setOnClickListener(new Button.OnClickListener(){
             @Override
             public void onClick(View view) {
-                Toast.makeText(HomeActivity.this, "Redirecting stopped.", Toast.LENGTH_LONG);
                 Redirecter.stop(HomeActivity.this);
+                Logger.log(HomeActivity.this, Log.INFO, "Redirecting stopped.");
             }
         });
     }

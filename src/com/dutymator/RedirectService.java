@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 import java.util.Date;
 
@@ -32,7 +33,6 @@ public class RedirectService extends Service
             this, calendarId, new Date(settings.getLong(Preferences.ALL_DAY_FROM, 0)), new Date(settings.getLong(Preferences.ALL_DAY_TO, 0))
         );
 
-        String message;
         if (activeEvent != null) {
             String number = contactsReader.getNumber(this, activeEvent.title);
 
@@ -46,20 +46,20 @@ public class RedirectService extends Service
                     }
 
                     Redirecter.lastRedirectedContact = activeEvent.title;
-                    message = "Redirected to " + activeEvent.title + " (" + number + ")";
 
+                    String message = "Redirected to " + activeEvent.title + " (" + number + ")";
+
+                    Logger.log(this, Log.INFO, message);
                     Notifier.notifyRedirect(getApplicationContext(), message);
                 } else {
-                    message = "No number for name " + activeEvent.title;
+                    Logger.log(this, Log.VERBOSE, "No number for name " + activeEvent.title);
                 }
             } else {
-                message = "Already redirected to " + activeEvent.title + " (" + number + ")";
+                Logger.log(this, Log.VERBOSE, "Already redirected to " + activeEvent.title + " (" + number + ")");
             }
         } else {
-            message = "No active event found!";
+            Logger.log(this, Log.VERBOSE, "No active event found!");
         }
-
-        Logger.log(this, message);
 
         Redirecter.schedule(this);
     }

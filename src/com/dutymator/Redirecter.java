@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -42,7 +43,7 @@ public class Redirecter
         SimpleDateFormat format = new SimpleDateFormat("yyyy. MM. dd. HH:mm:ss");
 
         String message = "Scheduled next check: " + format.format(time.getTime());
-        Logger.log(context, message);
+        Logger.log(context, Log.VERBOSE, message);
     }
 
     public static void stop(Context context) {
@@ -50,6 +51,8 @@ public class Redirecter
 
         alarmManager.cancel(lastIntent);
 
-        Logger.log(context, "Redirecting cancelled!");
+        Redirecter.lastRedirectedContact = null;
+
+        Logger.log(context, Log.VERBOSE, "Redirecting cancelled!");
     }
 }

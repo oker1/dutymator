@@ -17,4 +17,5 @@
     <string name="schedule_interval">Scheduling interval</string>
     <string name="dry_run">Dry run</string>
     <string name="menu_refresh">Refresh</string>
+    <string name="verbose_log">Verbose logging</string>
 </resources>

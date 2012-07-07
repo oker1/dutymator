@@ -20,4 +20,8 @@
         android:key="dry_run"
         android:title="@string/dry_run"
         android:defaultValue="0"/>
+    <CheckBoxPreference
+        android:key="verbose_log"
+        android:title="@string/verbose_log"
+        android:defaultValue="0"/>
 </PreferenceScreen>
