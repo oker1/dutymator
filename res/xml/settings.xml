@@ -16,6 +16,10 @@
         android:key="schedule_interval"
         android:title="@string/schedule_interval"
         android:inputType="numberDecimal"/>
+    <EditTextPreference
+        android:key="api_url"
+        android:title="@string/api_url"
+        android:inputType="textUri"/>
     <CheckBoxPreference
         android:key="dry_run"
         android:title="@string/dry_run"

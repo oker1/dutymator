@@ -11,4 +11,6 @@ public class Preferences
     public static final String SCHEDULING_INTERVAL = "schedule_interval";
     public static final String DRY_RUN             = "dry_run";
     public static final String VERBOSE_LOG         = "verbose_log";
+    public static final String SESSION_ID          = "session_id";
+    public static final String API_URL             = "api_url";
 }

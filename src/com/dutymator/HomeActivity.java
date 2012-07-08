@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.CookieSyncManager;
 import android.widget.Button;
 import android.widget.Toast;
 import com.dutymator.database.EventAdapter;
@@ -43,6 +44,8 @@ public class HomeActivity extends ListActivity
         setListAdapter(eventAdapter);
 
         setupButtons();
+
+        CookieSyncManager.createInstance(getApplicationContext());
     }
 
     private void setupButtons() {
@@ -50,8 +53,7 @@ public class HomeActivity extends ListActivity
 
         schedule.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view)
-            {
+            public void onClick(View view) {
                 Redirecter.schedule(HomeActivity.this);
                 Logger.log(HomeActivity.this, Log.INFO, "Redirecting scheduled.");
             }
@@ -59,7 +61,7 @@ public class HomeActivity extends ListActivity
 
         Button stop = (Button) findViewById(R.id.stop);
 
-        stop.setOnClickListener(new Button.OnClickListener(){
+        stop.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Redirecter.stop(HomeActivity.this);
@@ -114,8 +116,9 @@ public class HomeActivity extends ListActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent myIntent;
         switch (item.getItemId()) {
-            case R.id.menu_refresh:
-                fillEventAdapterFromCalendar(getCalendarIdFromPreferences());
+            case R.id.menu_login:
+                myIntent = new Intent(HomeActivity.this, LoginActivity.class);
+                HomeActivity.this.startActivityForResult(myIntent, 0);
                 return true;
             case R.id.menu_settings:
                 myIntent = new Intent(HomeActivity.this, SettingsActivity.class);
@@ -128,5 +131,24 @@ public class HomeActivity extends ListActivity
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case 0:
+                if (resultCode != RESULT_OK || data == null) {
+                    return;
+                }
+                // Get the token.
+                String token = data.getStringExtra("token");
+                if (token != null) {
+                    SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(this).edit();
+                    editor.putString(Preferences.SESSION_ID, token);
+                    editor.commit();
+                }
+                return;
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

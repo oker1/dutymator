@@ -16,6 +16,8 @@
     <string name="cancel">Cancel</string>
     <string name="schedule_interval">Scheduling interval</string>
     <string name="dry_run">Dry run</string>
-    <string name="menu_refresh">Refresh</string>
+    <string name="menu_login">Login</string>
     <string name="verbose_log">Verbose logging</string>
+    <string name="login_name">Login</string>
+    <string name="api_url">Api url</string>
 </resources>
