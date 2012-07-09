@@ -52,7 +52,7 @@ public class RedirectService extends Service
                     Logger.log(this, Log.INFO, message);
                     Notifier.notifyRedirect(getApplicationContext(), message);
                 } else {
-                    Logger.log(this, Log.VERBOSE, "No number for name " + activeEvent.title);
+                    Logger.log(this, Log.INFO, "No number for name " + activeEvent.title);
                 }
             } else {
                 Logger.log(this, Log.VERBOSE, "Already redirected to " + activeEvent.title + " (" + number + ")");
