@@ -63,9 +63,11 @@ public class CalendarReader {
                 event.beginTimestamp = eventCursor.getLong(2);
                 event.endTimestamp = eventCursor.getLong(3);
 
-                processEvent(allDayFrom, allDayTo, event);
+                if (!event.title.equals("busy")) {
+                    processEvent(allDayFrom, allDayTo, event);
 
-                events.add(event);
+                    events.add(event);
+                }
             }
 
             Collections.sort(events);
