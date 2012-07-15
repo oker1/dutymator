@@ -13,7 +13,7 @@ public class ContactsReader {
 
         Cursor cursor = context.getContentResolver().query(
             ContactsContract.Contacts.CONTENT_URI, null,
-            ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME + " ='"+name+"'", null, null
+            ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME + " LIKE '"+name+"'", null, null
         );
         while (cursor.moveToNext()) {
             String contactId = cursor.getString(cursor.getColumnIndex(
