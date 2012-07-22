@@ -1,7 +1,6 @@
 package com.dutymator;
 
 import android.app.ListActivity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -13,7 +12,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.webkit.CookieSyncManager;
 import android.widget.Button;
-import android.widget.Toast;
 import com.dutymator.database.EventAdapter;
 
 import java.util.ArrayList;
@@ -54,7 +52,7 @@ public class HomeActivity extends ListActivity
         schedule.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Redirecter.schedule(HomeActivity.this);
+                Redirecter.scheduleBySettings(HomeActivity.this);
                 Logger.log(HomeActivity.this, Log.INFO, "Redirecting scheduled.");
             }
         });
@@ -95,13 +93,16 @@ public class HomeActivity extends ListActivity
 
         eventAdapter.clear();
 
-        ArrayList<Event> events = calendarReader.getEventsFromCalendar(
-            getApplicationContext(), calendar, new Date(settings.getLong(Preferences.ALL_DAY_FROM, 0)),
-            new Date(settings.getLong(Preferences.ALL_DAY_TO, 0))
-        );
+        try {
+            ArrayList<Event> events = calendarReader.getEventsFromCalendar(
+                    getApplicationContext(), calendar, new Date(settings.getLong(Preferences.ALL_DAY_FROM, 0)),
+                    new Date(settings.getLong(Preferences.ALL_DAY_TO, 0))
+            );
 
-        for (Event event : events) {
-            eventAdapter.add(event);
+            for (Event event : events) {
+                eventAdapter.add(event);
+            }
+        } catch (IntermittentException e) {
         }
     }
 

@@ -4,6 +4,7 @@ import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteException;
 import android.net.Uri;
 import android.os.Build;
 import android.text.format.DateUtils;
@@ -38,7 +39,8 @@ public class CalendarReader {
         return calendars;
     }
 
-    public ArrayList<Event> getEventsFromCalendar(Context context, int calendarId, Date allDayFrom, Date allDayTo) {
+    public ArrayList<Event> getEventsFromCalendar(Context context, int calendarId, Date allDayFrom, Date allDayTo)
+        throws IntermittentException {
         ContentResolver contentResolver = context.getContentResolver();
 
         Uri.Builder builder = Uri.parse("content://com.android.calendar/instances/when").buildUpon();
@@ -46,34 +48,37 @@ public class CalendarReader {
         ContentUris.appendId(builder, now - DateUtils.DAY_IN_MILLIS * 2);
         ContentUris.appendId(builder, now + DateUtils.WEEK_IN_MILLIS);
 
-        Cursor eventCursor = contentResolver.query(builder.build(),
+        try {
+            Cursor eventCursor = contentResolver.query(builder.build(),
                 new String[] { "_id", "title", "begin", "end", "allDay", "eventTimezone"},
                 "Calendars._id = " + calendarId, null, "begin ASC");
 
-        ArrayList<Event> events = new ArrayList<Event>();
+            ArrayList<Event> events = new ArrayList<Event>();
 
-        if (eventCursor != null) {
-            while (eventCursor.moveToNext()) {
-                Event event = new Event();
-                event._id = eventCursor.getString(0);
-                event.title = eventCursor.getString(1);
-                event.begin = new Date(eventCursor.getLong(2));
-                event.end = new Date(eventCursor.getLong(3));
-                event.allDay = eventCursor.getInt(4) != 0;
-                event.beginTimestamp = eventCursor.getLong(2);
-                event.endTimestamp = eventCursor.getLong(3);
+            if (eventCursor != null) {
+                while (eventCursor.moveToNext()) {
+                    Event event = new Event();
+                    event._id = eventCursor.getString(0);
+                    event.title = eventCursor.getString(1);
+                    event.begin = new Date(eventCursor.getLong(2));
+                    event.end = new Date(eventCursor.getLong(3));
+                    event.allDay = eventCursor.getInt(4) != 0;
+                    event.beginTimestamp = eventCursor.getLong(2);
+                    event.endTimestamp = eventCursor.getLong(3);
 
-                if (!event.title.equals("busy")) {
-                    processEvent(allDayFrom, allDayTo, event);
+                    if (!event.title.equals("busy")) {
+                        processEvent(allDayFrom, allDayTo, event);
 
-                    events.add(event);
+                        events.add(event);
+                    }
                 }
-            }
 
-            Collections.sort(events);
+                Collections.sort(events);
+            }
+            return events;
+        } catch (SQLiteException e) {
+            throw new IntermittentException(e);
         }
-        
-        return events;
     }
 
     public String[] getCalendarEntries(Context context) {
@@ -97,6 +102,7 @@ public class CalendarReader {
     }
 
     public Event getActiveEventFromCalendar(Context context, int calendarId, Date allDayFrom, Date allDayTo)
+        throws IntermittentException
     {
         ArrayList<Event> events = getEventsFromCalendar(context, calendarId, allDayFrom, allDayTo);
 

@@ -21,10 +21,14 @@ public class Redirecter
 
     public static String lastRedirectedContact;
 
-    public static void schedule(Context context) {
+    public static void scheduleBySettings(Context context) {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
         int seconds = Integer.parseInt(settings.getString(Preferences.SCHEDULING_INTERVAL, "300"));
 
+        scheduleInSeconds(context, seconds);
+    }
+
+    public static void scheduleInSeconds(Context context, int seconds) {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Activity.ALARM_SERVICE);
         Intent redirectIntent = new Intent(context, RedirectService.class);
         redirectIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
