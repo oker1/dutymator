@@ -26,11 +26,16 @@ public class ContactsReader {
                         ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null,
                             ContactsContract.CommonDataKinds.Phone.CONTACT_ID +" = "+ contactId, null, null
                     );
-                    if (phones.moveToNext()) {
-                        number = phones.getString(phones.getColumnIndex( ContactsContract.CommonDataKinds.Phone.NUMBER));
-                        break;
+
+                    if (phones != null) {
+                        if (phones.moveToNext()) {
+                            number = phones.getString(phones.getColumnIndex( ContactsContract.CommonDataKinds.Phone.NUMBER));
+                            break;
+                        }
+                        phones.close();
+                    } else {
+                        throw new IntermittentException();
                     }
-                    phones.close();
                 }
             }
 
