@@ -52,7 +52,7 @@ public class HomeActivity extends ListActivity
         schedule.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Redirecter.scheduleBySettings(HomeActivity.this);
+                Redirecter.scheduleInSeconds(HomeActivity.this, 5);
                 Logger.log(HomeActivity.this, Log.INFO, "Redirecting scheduled.");
             }
         });
