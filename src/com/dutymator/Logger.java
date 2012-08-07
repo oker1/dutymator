@@ -3,22 +3,10 @@ package com.dutymator;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.util.Config;
 import android.util.Log;
 import com.dutymator.database.LogProvider;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.methods.HttpPut;
-import org.apache.http.conn.ClientConnectionManager;
-import org.apache.http.conn.scheme.PlainSocketFactory;
-import org.apache.http.conn.scheme.Scheme;
-import org.apache.http.conn.scheme.SchemeRegistry;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
-import org.apache.http.params.BasicHttpParams;
-
-import java.io.IOException;
 
 import static com.dutymator.DutymatorApp.TAG;
 

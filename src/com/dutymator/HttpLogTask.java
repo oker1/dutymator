@@ -1,6 +1,5 @@
 package com.dutymator;
 
-import android.net.Uri;
 import android.os.AsyncTask;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.CookieStore;
@@ -9,14 +8,12 @@ import org.apache.http.conn.ClientConnectionManager;
 import org.apache.http.conn.scheme.PlainSocketFactory;
 import org.apache.http.conn.scheme.Scheme;
 import org.apache.http.conn.scheme.SchemeRegistry;
-import org.apache.http.cookie.CookieSpecRegistry;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
 import org.apache.http.impl.cookie.BasicClientCookie;
 import org.apache.http.params.BasicHttpParams;
-import org.apache.http.params.HttpParams;
 import org.json.JSONException;
 import org.json.JSONObject;
 
