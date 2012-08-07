@@ -1,11 +1,11 @@
 package com.dutymator;
 
 import android.app.ListActivity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -52,8 +52,7 @@ public class HomeActivity extends ListActivity
         schedule.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Redirecter.scheduleInSeconds(HomeActivity.this, 5);
-                Logger.log(HomeActivity.this, Log.INFO, "Redirecting scheduled.");
+                Redirecter.startRedirecting(HomeActivity.this);
             }
         });
 
@@ -62,8 +61,7 @@ public class HomeActivity extends ListActivity
         stop.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Redirecter.stop(HomeActivity.this);
-                Logger.log(HomeActivity.this, Log.INFO, "Redirecting stopped.");
+                Redirecter.stopRedirecting(HomeActivity.this);
             }
         });
     }

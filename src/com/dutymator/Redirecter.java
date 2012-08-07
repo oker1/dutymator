@@ -60,4 +60,16 @@ public class Redirecter
 
         Logger.log(context, Log.VERBOSE, "Redirecting cancelled!");
     }
+
+    public static void startRedirecting(Context context) {
+        scheduleInSeconds(context, 5);
+        Logger.log(context, Log.INFO, "Redirecting scheduled.");
+        Notifier.notifyRedirectStarted(context);
+    }
+
+    public static void stopRedirecting(Context context) {
+        stop(context);
+        Logger.log(context, Log.INFO, "Redirecting stopped.");
+        Notifier.notifyRedirectStopped(context);
+    }
 }
