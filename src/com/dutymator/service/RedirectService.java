@@ -22,12 +22,13 @@ public class RedirectService extends Service
         super.onStart(intent, startId);
 
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
-        int calendarId = Integer.parseInt(settings.getString(Preferences.CALENDAR_ID, "-1"));
 
         CalendarReader reader = new CalendarReader();
         ContactsReader contactsReader = new ContactsReader();
 
         try {
+            int calendarId = Integer.parseInt(settings.getString(Preferences.CALENDAR_ID, "-1"));
+
             Event activeEvent = reader.getActiveEventFromCalendar(
                 this, calendarId, new Date(settings.getLong(Preferences.ALL_DAY_FROM, 0)), new Date(settings.getLong(Preferences.ALL_DAY_TO, 0))
             );
@@ -64,6 +65,8 @@ public class RedirectService extends Service
         } catch (IntermittentException e) {
             Logger.log(this, Log.INFO, "Intermittent error: " + e.toString() + " stacktrace: " + e.getStackTrace().toString());
             Redirecter.scheduleInSeconds(this, 30);
+        } catch (NumberFormatException e) {
+            Logger.log(this, Log.VERBOSE, "Error: " + e.toString() + " stacktrace: " + e.getStackTrace().toString());
         }
     }
 
