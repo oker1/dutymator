@@ -18,8 +18,7 @@ public class CalendarReader {
     public Map<String, String> getCalendarIds(Context context) {
         ContentResolver contentResolver = context.getContentResolver();
 
-        String calendarUrl = Integer.parseInt(Build.VERSION.SDK) >= Build.VERSION_CODES.FROYO ?
-            "content://com.android.calendar" : "content://calendar";
+        String calendarUrl = getCalendarUrl();
 
         final Cursor cursor = contentResolver.query(Uri.parse(calendarUrl + "/calendars"),
                 (new String[] { "_id", "displayName" }), null, null, null);
@@ -43,7 +42,7 @@ public class CalendarReader {
         throws IntermittentException {
         ContentResolver contentResolver = context.getContentResolver();
 
-        Uri.Builder builder = Uri.parse("content://com.android.calendar/instances/when").buildUpon();
+        Uri.Builder builder = Uri.parse(getCalendarUrl() + "/instances/when").buildUpon();
         long now = new Date().getTime();
         ContentUris.appendId(builder, now - DateUtils.DAY_IN_MILLIS * 2);
         ContentUris.appendId(builder, now + DateUtils.WEEK_IN_MILLIS);
@@ -139,5 +138,10 @@ public class CalendarReader {
                 );
             }
         }
+    }
+
+    private String getCalendarUrl() {
+        return Integer.parseInt(Build.VERSION.SDK) >= Build.VERSION_CODES.FROYO ?
+                "content://com.android.calendar" : "content://calendar";
     }
 }
